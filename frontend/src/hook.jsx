@@ -1,7 +1,12 @@
 import { GASClient } from 'gas-client'
-const { serverFunctions } = new GASClient()
+const { serverFunctions } = new GASClient({
+  allowedDevelopmentDomains: 'https://localhost:5173 https://localhost:4173'
+})
 
 export const getAllTasks = serverFunctions.getAllTasks
+export const addTask = serverFunctions.addTask
+export const updateTask = serverFunctions.updateTask
+export const deleteTask = serverFunctions.deleteTask
 
 /**
 How to use

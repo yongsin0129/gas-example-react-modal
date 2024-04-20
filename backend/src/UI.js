@@ -13,5 +13,5 @@ export function showModal_todoList () {
   const html = HtmlService.createHtmlOutputFromFile('index')
     .setWidth(600)
     .setHeight(600)
-  SpreadsheetApp.getUi().showModalDialog(html, 'React_todoList')
+  SpreadsheetApp.getUi().showModelessDialog(html, 'React_todoList')
 }

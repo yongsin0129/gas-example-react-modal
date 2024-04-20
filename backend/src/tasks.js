@@ -1,7 +1,21 @@
 export function getAllTasks () {
   const tasks = SpreadsheetApp.getActiveSheet().getDataRange().getValues()
-  tasks.shift() // 移除標頭列
-  return tasks
+
+  // change array to object
+  const keys = tasks[0]
+  const result = []
+
+  tasks.slice(1).forEach(arr => {
+    const obj = {}
+
+    keys.forEach((key, index) => {
+      obj[key] = arr[index]
+    })
+
+    result.push(obj)
+  })
+
+  return result
 }
 
 export function updateTask (taskId, completed) {
@@ -9,10 +23,8 @@ export function updateTask (taskId, completed) {
   const taskRow = parseInt(taskId) + 1  // Google Sheets 的列數從 1 開始
 
   // 更新任務的完成狀態
-  sheet.getRange(taskRow, 3).setValue(completed ? 'Y' : 'N')
+  sheet.getRange(taskRow, 3).setValue(completed ? 'False' : 'True')
 
-  // show info
-  hello(`taskId : ${taskId} has been updated`)
 }
 
 export function addTask (task) {
@@ -22,10 +34,9 @@ export function addTask (task) {
 
   // 將任務新增到試算表中
   sheet.getRange(newRow, 2).setValue(task)
-  sheet.getRange(newRow, 3).setValue('N')  // 預設未完成
+  sheet.getRange(newRow, 3).setValue('False')  // 預設未完成
 
-  // show info
-  hello(`taskName : ${task} has been added`)
+  return true
 }
 
 export function deleteTask (taskId) {
@@ -35,6 +46,5 @@ export function deleteTask (taskId) {
   // 刪除任務列
   sheet.deleteRow(taskRow)
 
-  // show info
-  hello(`taskId : ${taskId} has been deleted`)
+  return true
 }
