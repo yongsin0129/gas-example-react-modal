@@ -25,6 +25,8 @@ export function updateTask (taskId, completed) {
   // 更新任務的完成狀態
   sheet.getRange(taskRow, 3).setValue(completed ? 'False' : 'True')
 
+  return true
+
 }
 
 export function addTask (task) {

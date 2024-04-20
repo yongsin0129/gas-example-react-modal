@@ -15,13 +15,24 @@ function TodoList () {
     getAllTasks().then(tasks => setTasks(tasks))
   }
 
+  function showTasks () {
+    console.log(tasks)
+  }
+
   useEffect(() => {
     updataCanva()
   }, [])
 
   function addTaskToServer (text) {
     addTask(text)
-      .then(() => updataCanva())
+      .then(() => {
+        const newTask = {
+          id: tasks.length + 1,
+          text: text,
+          completed: false
+        }
+        setTasks([...tasks, newTask])
+      })
       .catch(err => console.log(err))
 
     setText('')
@@ -29,13 +40,22 @@ function TodoList () {
 
   function deleteTask (id) {
     deleteServerTask(id)
-      .then(() => updataCanva())
+      .then(() => {
+        const result = tasks.filter(task => task.id !== id)
+        setTasks(result)
+      })
       .catch(err => console.log(err))
   }
 
   function toggleCompleted (id, completed) {
     updateTask(id, completed)
-      .then(() => updataCanva())
+      .then(() => {
+        const result = tasks.map(task => {
+          if (task.id === id) task.completed = !task.completed
+          return task
+        })
+        setTasks(result)
+      })
       .catch(err => console.log(err))
   }
 
@@ -52,6 +72,8 @@ function TodoList () {
 
       <input value={text} onChange={e => setText(e.target.value)} />
       <button onClick={() => addTaskToServer(text)}>Add</button>
+      <br />
+      <button onClick={() => showTasks(text)}>showTasks</button>
     </div>
   )
 }
