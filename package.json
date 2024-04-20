@@ -1,0 +1,18 @@
+{
+  "name": "gas-example-react-modal",
+  "version": "1.0.0",
+  "description": "frontend:vite,backend:esbuild",
+  "scripts": {
+    "bootstrap": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "prebuild": "rm -rf dist && mkdir dist",
+    "build:backend": "cd backend && npm run build && cp dist/* ../dist/",
+    "build:frontend": "cd frontend && npm run build && cp dist/* ../dist/",
+    "build": "npm run build:frontend && npm run build:backend && cp appsscript.json dist",
+    "push": "npx clasp push",
+    "deploy": "npm run build && npm run push"
+  },
+  "author": "Hideaki Matsunami <carbon0409@gmail.com>",
+  "devDependencies": {
+    "@google/clasp": "^2.4.2"
+  }
+}
